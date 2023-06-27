@@ -7,11 +7,12 @@ import { useCallback, useEffect, useState } from 'react'
 const List = () => {
 
     const [apiData, setApiData] = useState()
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState()
+    const [botaoClick, setBotao] = useState()
 
     const fetchApiData = useCallback(async () => {
         try {
-            const {data} = await axios.get('https://digimon-api.vercel.app/api/digimon/level/Mega')
+            const {data} = await axios.get('https://digimon-api.vercel.app/api/digimon')
             setApiData(data)
         }catch(error) {
             console.error(error)
@@ -24,7 +25,7 @@ const List = () => {
 
     const renderApiData = () => {
         if (loading || !apiData?.length) {
-            return (<h3>Carregando</h3>)
+            return (<h1>Carregando</h1>)
         } 
         return (
             <div>
@@ -37,10 +38,18 @@ const List = () => {
             </div>
         )
     }
+    
+        const paginacao = () => {
+            setBotao("ok")
+        }
 
     return (
         <div className='container1'> 
             <h1 className='caixa'> Lista de Digimons </h1>
+                <div className='botao'> 
+                        <button onClick={paginacao}><h2>Pag - 02</h2></button>
+                        <h3>{botaoClick}</h3>
+                </div>
             {renderApiData()}
         </div>
     );
